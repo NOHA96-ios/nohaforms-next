@@ -1,0 +1,12 @@
+JustForms Starter Kit - Commercial License
+
+You MAY:
+- Use this code in personal and commercial projects
+- Modify it freely
+- Sell products you build with this code
+
+You MAY NOT:
+- Resell or redistribute the source code itself
+- Claim authorship of the original source
+
+No warranty. Use at your own risk.

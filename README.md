@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# JustForms — Form Builder Starter Kit
 
-## Getting Started
+A production-ready form builder built with **Next.js 15 + Supabase + Tailwind CSS**. Fork it, rebrand it, launch your own form product in a weekend.
 
-First, run the development server:
+**🔗 Live demo:** [https://getjustforms.vercel.app](https://getjustforms.vercel.app)
+
+## ✨ Features
+
+- 🔐 Email + password auth (Supabase)
+
+- 📝 Form editor with 6 question types:
+
+  short text · long text · email · number · multiple choice · checkboxes
+
+- 🌍 Public form pages at `/f/[slug]` — anyone with the link can submit
+
+- 💾 Submissions saved to PostgreSQL
+
+- 📊 Responses viewer with CSV export
+
+- 🎨 Minimalist Tally-inspired UI
+
+- 📱 Fully responsive
+
+- 🚀 Deploy to Vercel in one click
+
+## 🛠 Tech stack
+
+- **Next.js 16** (App Router, Server Components, Server Actions)
+
+- **Supabase** (Auth + PostgreSQL + Row Level Security)
+
+- **Tailwind CSS**
+
+- **TypeScript**
+
+- **Lucide** icons
+
+## 🚀 Quick start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+git clone <your-repo-url>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+cd justforms
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+npm install
