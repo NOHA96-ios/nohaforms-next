@@ -8,8 +8,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "JustForms",
-  description: "Build and share beautiful forms.",
+  title: 'JustForms — Forms that feel effortless',
+  description: 'Create beautiful forms, share a link, collect responses.',
+  openGraph: {
+    title: 'JustForms',
+    description: 'Create beautiful forms in seconds.',
+    url: 'https://getjustforms.vercel.app',
+    siteName: 'JustForms',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
