@@ -10,7 +10,6 @@ export async function submitForm(
 ) {
   const supabase = await createClient();
 
-  // Enforce free-tier response limit
   const { count } = await supabase
     .from('submissions')
     .select('id', { count: 'exact', head: true })
