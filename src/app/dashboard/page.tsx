@@ -3,12 +3,11 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { createForm, deleteForm } from './actions';
 import TitleEditor from './title-editor';
-import { Plus, FileText, Trash2, Pencil, ArrowUpRight } from 'lucide-react';
+import { Plus, FileText, Trash2, Pencil, ArrowUpRight, Lock } from 'lucide-react';
 
 export default async function DashboardPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-
   if (!user) redirect('/signin');
 
   const { data: forms } = await supabase
@@ -32,9 +31,24 @@ export default async function DashboardPage() {
 
   const email = user.email || '';
   const initial = email.charAt(0).toUpperCase();
+  const formCount = forms?.length || 0;
+  const isAtLimit = formCount >= 2;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-neutral-50">
+      <div className="bg-teal-700 text-white text-center text-sm py-2.5 px-4">
+        <span className="font-medium">This is a demo of JustForms.</span>{' '}
+        Want to run your own version?{' '}
+        <a
+          href="https://justforms.gumroad.com/l/app"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline font-semibold hover:text-teal-100"
+        >
+          Get the code for $49 →
+        </a>
+      </div>
+
       <header className="border-b border-neutral-200 bg-white/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 group">
@@ -74,24 +88,60 @@ export default async function DashboardPage() {
               Your forms
             </h1>
             <p className="text-neutral-500 mt-1.5 text-sm">
-              {forms && forms.length > 0
-                ? `${forms.length} ${forms.length === 1 ? 'form' : 'forms'} · ${Object.values(counts).reduce((a, b) => a + b, 0)} total responses`
+              {formCount > 0
+                ? `${formCount} of 2 forms · ${Object.values(counts).reduce((a, b) => a + b, 0)} total responses`
                 : 'Create your first form to get started'}
             </p>
           </div>
 
-          <form action={createForm}>
-            <button
-              type="submit"
-              className="inline-flex items-center gap-2 bg-teal-700 hover:bg-teal-800 text-white text-sm font-medium px-4 py-2.5 rounded-lg shadow-sm hover:shadow transition-all"
+          {isAtLimit ? (
+            <a
+              href="https://justforms.gumroad.com/l/app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-neutral-900 hover:bg-black text-white text-sm font-medium px-4 py-2.5 rounded-lg shadow-sm hover:shadow transition-all"
             >
-              <Plus className="w-4 h-4" strokeWidth={2.5} />
-              New form
-            </button>
-          </form>
+              <Lock className="w-4 h-4" />
+              Get unlimited forms →
+            </a>
+          ) : (
+            <form action={createForm}>
+              <button
+                type="submit"
+                className="inline-flex items-center gap-2 bg-teal-700 hover:bg-teal-800 text-white text-sm font-medium px-4 py-2.5 rounded-lg shadow-sm hover:shadow transition-all"
+              >
+                <Plus className="w-4 h-4" strokeWidth={2.5} />
+                New form
+              </button>
+            </form>
+          )}
         </div>
 
-        {!forms || forms.length === 0 ? (
+        {isAtLimit && (
+          <div className="mb-6 bg-amber-50 border border-amber-200 rounded-xl p-5 flex items-start gap-4">
+            <div className="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center shrink-0">
+              <Lock className="w-5 h-5 text-amber-700" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-amber-900">
+                Free tier limit reached — 2 forms max
+              </p>
+              <p className="text-sm text-amber-700 mt-1">
+                This is a demo. Get the full code to run JustForms yourself — unlimited forms, your own domain, your own data.{' '}
+                <a
+                  href="https://justforms.gumroad.com/l/app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline font-semibold hover:text-amber-900"
+                >
+                  Get the code for $49 →
+                </a>
+              </p>
+            </div>
+          </div>
+        )}
+
+        {formCount === 0 ? (
           <div className="border border-dashed border-neutral-300 rounded-2xl py-24 px-8 text-center bg-white/50">
             <div className="w-16 h-16 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center mx-auto mb-5">
               <FileText className="w-7 h-7 text-teal-700" strokeWidth={1.5} />
@@ -114,7 +164,7 @@ export default async function DashboardPage() {
           </div>
         ) : (
           <ul className="grid gap-3">
-            {forms.map((form) => (
+            {forms?.map((form) => (
               <li
                 key={form.id}
                 className="group bg-white border border-neutral-200 rounded-xl p-5 hover:border-teal-200 hover:shadow-md transition-all"
